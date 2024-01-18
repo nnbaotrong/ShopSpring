@@ -6,6 +6,8 @@ import com.webshop.spring.dao.CustomerRepository;
 import com.webshop.spring.dto.Purchase;
 import com.webshop.spring.dto.PurchaseResponse;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CheckoutServiceImpl implements CheckoutService{
 
@@ -17,6 +19,7 @@ public class CheckoutServiceImpl implements CheckoutService{
 	}
 	
 	@Override
+	@Transactional
 	public PurchaseResponse placeOrder(Purchase purchase) {
 		return null;
 	}
