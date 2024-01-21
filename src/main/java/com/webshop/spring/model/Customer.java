@@ -11,37 +11,52 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "customer")
-@Data
+@Table(name="customer")
+@Getter
+@Setter
 public class Customer {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
 
-	@Column(name = "firs_name")
-	private String firstName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private Long id;
 
-	@Column(name = "last_name")
-	private String lastName;
+    @Column(name="first_name")
+    private String firstName;
 
-	@Column(name = "email")
-	private String email;
-	
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-	private Set<Order> orders = new HashSet<>();
+    @Column(name="last_name")
+    private String lastName;
 
-	public void add(Order order) {
-		if (order != null) {
-			if (orders == null) {
-				orders = new HashSet<>();
-			}
-			orders.add(order);
-			order.setCustomer(this);
-		}
-	}
+    @Column(name="email")
+    private String email;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Set<Order> orders = new HashSet<>();
+
+    public void add(Order order) {
+
+        if (order != null) {
+
+            if (orders == null) {
+                orders = new HashSet<>();
+            }
+
+            orders.add(order);
+            order.setCustomer(this);
+        }
+    }
+
 }
+
+
+
+
+
+
+
+
+

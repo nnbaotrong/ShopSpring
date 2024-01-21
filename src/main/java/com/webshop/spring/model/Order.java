@@ -19,63 +19,73 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "order")
-@Data
+@Table(name="orders")
 @Getter
 @Setter
 public class Order {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
 
-	@Column(name = "image_url")
-	private String orderTrackingNumber;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private Long id;
 
-	@Column(name = "tota_quatity")
-	private int totalQuatity;
+    @Column(name="order_tracking_number")
+    private String orderTrackingNumber;
 
-	@Column(name = "total_price")
-	private BigDecimal totalPrice;
+    @Column(name="total_quantity")
+    private int totalQuantity;
 
-	@Column(name = "status")
-	private String status;
+    @Column(name="total_price")
+    private BigDecimal totalPrice;
 
-	@Column(name = "date_created")
-	@CreationTimestamp
-	private Date dateCreated;
+    @Column(name="status")
+    private String status;
 
-	@Column(name = "last_updated")
-	@UpdateTimestamp
-	private Date lastUpdated;
+    @Column(name="date_created")
+    @CreationTimestamp
+    private Date dateCreated;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-	private Set<OrderItem> orderItems = new HashSet<>();
+    @Column(name="last_updated")
+    @UpdateTimestamp
+    private Date lastUpdated;
 
-	@ManyToOne
-	@JoinColumn(name = "custome_id")
-	private Customer customer;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    private Set<OrderItem> orderItems = new HashSet<>();
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "shipping_address_id", referencedColumnName = "id")
-	private Address shippingAddress;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "billing_address_id", referencedColumnName = "id")
-	private Address billingAddress;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "shipping_address_id", referencedColumnName = "id")
+    private Address shippingAddress;
 
-	public void add(OrderItem item) {
-		if (item != null) {
-			if (orderItems == null) {
-				orderItems = new HashSet<>();
-			}
-			orderItems.add(item);
-			item.setOrder(this);
-		}
-	}
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "billing_address_id", referencedColumnName = "id")
+    private Address billingAddress;
+
+    public void add(OrderItem item) {
+
+        if (item != null) {
+            if (orderItems == null) {
+                orderItems = new HashSet<>();
+            }
+
+            orderItems.add(item);
+            item.setOrder(this);
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
